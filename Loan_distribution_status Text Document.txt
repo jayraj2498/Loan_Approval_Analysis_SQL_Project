@@ -1,0 +1,242 @@
+
+Here we have data set 
+The dataset contains information related to loan applications, including applicant details 
+
+The project aims to perform data analysis on the loan dataset using SQL queries. We are exploring various aspects of the data,
+such as loan approval rates based on different factors, average loan amounts, income distribution, and trends in loan applications.
+
+We have solved a total of 15 SQL questions. The queries cover a wide range of complexity, 
+from basic to intermediate level, enabling us to derive meaningful insights from the dataset.
+
+We Gain valuable insights into loan application patterns, factors influencing approvals, and demographic trends.
+
+CREATE TABLE loan (
+    Loan_ID VARCHAR(10) PRIMARY KEY,
+    Gender VARCHAR(10),
+    Married VARCHAR(5),
+    Dependents VARCHAR(10),
+    Education VARCHAR(20),
+    Self_Employed VARCHAR(5),
+    ApplicantIncome INT,
+    CoapplicantIncome INT,
+    LoanAmount INT,
+    Loan_Amount_Term INT,
+    Credit_History INT,
+    Property_Area VARCHAR(20),
+    Loan_Status VARCHAR(5)
+);
+
+
+copy loan(Loan_ID, Gender, Married, Dependents, Education, Self_Employed, ApplicantIncome,
+		   CoapplicantIncome, LoanAmount,  Loan_Amount_Term, Credit_History, 
+		  Property_Area, Loan_Status)
+from 'E:\SQL\sql insert\loan (1).csv'
+delimiter ','
+csv header 
+
+
+
+
+
+
+
+What is the distribution of loan applicants based on gender?
+sql
+SELECT Gender, COUNT(*) AS Count
+FROM loan
+GROUP BY Gender;
+
+
+
+How does the marital status affect loan approval rates?
+
+SELECT Married, Loan_Status, COUNT(*) AS Count
+FROM loan
+GROUP BY Married, Loan_Status;
+
+
+What is the average income of loan applicants?
+
+
+SELECT AVG(ApplicantIncome) AS AverageIncome
+FROM loan;
+
+
+Is there any relationship between the number of dependents and loan approval?
+
+SELECT Dependents, Loan_Status, COUNT(*) AS Count
+FROM loan
+GROUP BY Dependents, Loan_Status;
+
+
+How does education level impact the loan amount requested?
+
+SELECT Education, AVG(LoanAmount) AS AverageLoanAmount
+FROM loan
+GROUP BY Education;
+
+
+
+Are self-employed applicants more or less likely to get their loans approved?
+
+
+SELECT Self_Employed, Loan_Status, COUNT(*) AS Count
+FROM loan
+GROUP BY Self_Employed, Loan_Status;
+
+
+What are the most common property areas for loan applicants?
+
+SELECT Property_Area, COUNT(*) AS Count
+FROM loan
+GROUP BY Property_Area
+ORDER BY Count DESC;
+
+
+What is the average loan amount and loan term for approved and rejected applications?
+
+SELECT Loan_Status, AVG(LoanAmount) AS AverageLoanAmount, AVG(Loan_Amount_Term) AS AverageLoanTerm
+FROM loan
+GROUP BY Loan_Status;
+
+
+How does credit history influence the chances of loan approval?
+
+SELECT Credit_History, Loan_Status, COUNT(*) AS Count
+FROM loan
+GROUP BY Credit_History, Loan_Status;
+
+
+Are there any patterns in the loan status based on the applicant's income and coapplicant's income?
+
+
+SELECT ApplicantIncome, CoapplicantIncome, Loan_Status
+FROM loan;
+
+
+
+
+** five intermediate-level questions along with their SQL queries ** 
+
+
+What is the average loan amount for each combination of "Property_Area" and "Education"?
+
+
+SELECT Property_Area, Education, AVG(LoanAmount) AS AverageLoanAmount
+FROM loan
+GROUP BY Property_Area, Education;
+
+
+
+What is the percentage of approved loans for each "Dependents" category?
+
+SELECT Dependents, 
+       SUM(CASE WHEN Loan_Status = 'Y' THEN 1 ELSE 0 END) AS Approved_Count,
+       COUNT(*) AS Total_Count,
+       (SUM(CASE WHEN Loan_Status = 'Y' THEN 1 ELSE 0 END)::NUMERIC / COUNT(*) * 100) AS Approval_Percentage
+FROM loan
+GROUP BY Dependents;
+
+
+
+
+What are the top 5 loan applicants with the highest total income (ApplicantIncome + CoapplicantIncome)?
+
+SELECT Loan_ID, 
+       ApplicantIncome + CoapplicantIncome AS TotalIncome
+FROM loan
+ORDER BY TotalIncome DESC
+LIMIT 5;
+
+
+How does the loan approval rate vary for different loan amount terms (Loan_Amount_Term)?
+
+SELECT Loan_Amount_Term,
+       SUM(CASE WHEN Loan_Status = 'Y' THEN 1 ELSE 0 END) AS Approved_Count,
+       COUNT(*) AS Total_Count,
+       (SUM(CASE WHEN Loan_Status = 'Y' THEN 1 ELSE 0 END)::NUMERIC / COUNT(*) * 100) AS Approval_Percentage
+FROM loan
+GROUP BY Loan_Amount_Term;
+
+
+
+
+
+What is the average loan amount for each combination of "Property_Area" and "Married" status, but only for those with a credit history (Credit_History = 1)?
+
+SELECT Property_Area, Married, AVG(LoanAmount) AS AverageLoanAmount
+FROM loan
+WHERE Credit_History = 1
+GROUP BY Property_Area, Married;
+
+
+
+
+===============================================================================================================================================================================
+
+
+Sure! Here's a concise explanation for your data analytics project:
+
+1. Type of Data: The dataset contains information related to loan applications, including applicant details (gender, marital status, education, self-employment status), financial information (applicant and coapplicant income, loan amount, loan term), credit history, property area, and loan status.
+
+2. Project Objective: The project aims to perform data analysis on the loan dataset using SQL queries. We are exploring various aspects of the data, such as loan approval rates based on different factors, average loan amounts, income distribution, and trends in loan applications.
+
+3. Number of SQL Questions: We have solved a total of 15 SQL questions. The queries cover a wide range of complexity, from basic to intermediate level, enabling us to derive meaningful insights from the dataset.
+
+4. Benefits of Data Analytics: By using SQL to analyze the data, we gain valuable insights into loan application patterns, factors influencing loan approvals, and demographic trends. This data-driven approach helps in making informed decisions, identifying areas for improvement, and optimizing loan approval processes for better efficiency.
+
+5. Data Analysis Outputs: The SQL queries have allowed us to generate meaningful visualizations and summaries, helping stakeholders understand loan application trends, assess risk factors, and make data-driven business decisions. The project serves as a foundation for further data analysis and enables us to extract valuable information from the dataset.
+
+By documenting these details in your Word file, you'll have a clear and concise summary of your data analytics project using SQL. It will help you track your progress, showcase your analysis, and communicate the project's value to stakeholders or anyone interested in your work.
+
+
+
+
+
+
+
+===============================================================================================================================================================================
+
+
+Sure, here's the concise version:
+
+1. Type of Data: Loan application dataset with applicant details, financial information, credit history, and loan status.
+
+2. Project Objective: Perform data analysis using SQL to explore loan approval rates, average loan amounts, and applicant trends.
+
+3. Number of SQL Questions: Solved 15 SQL questions ranging from basic to intermediate level.
+
+4. Benefits of Data Analytics: Gain valuable insights into loan application patterns, factors influencing approvals, and demographic trends.
+
+5. Data Analysis Outputs: Visualizations and summaries aid decision-making and optimize loan approval processes.
+
+
+
+=====================================================================================================================================================================================
+
+Let me clarify the meaning of each of the four columns in the dataset:
+
+ApplicantIncome: This column represents the income of the primary applicant applying for the loan. It indicates how much the primary applicant earns regularly.
+
+CoapplicantIncome: This column represents the income of the co-applicant (if applicable) who is also involved in the loan application. It shows the earnings of another person who is part of the loan application process.
+
+LoanAmount: This column represents the amount of the loan being applied for. It shows the total sum of money the applicant is requesting as a loan.
+
+Loan_Amount_Term: This column represents the term or duration of the loan. It indicates the time period within which the loan is expected to be repaid, typically in months.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
